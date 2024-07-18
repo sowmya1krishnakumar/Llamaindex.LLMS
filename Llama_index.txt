@@ -1,0 +1,23 @@
+import os
+
+os.environ["OPENAI_API_KEY"] = "llx-HpSRoxHGYjLxuUHjbGVa5CXhpN7bNJS3JScGYWB8KZjSGku2"
+
+# from llama_index.core.indices.vector_store.base import VectorStoreIndex, SimpleDirectoryReader
+
+from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
+
+# from IPython.display import Markdown, display
+
+documents = SimpleDirectoryReader("data").load_data()
+# print(documents)
+
+index = VectorStoreIndex.from_documents(documents=documents)
+
+# [nltk_data] downloading package punkt to /tmp/llama_index...
+# [nltk_data]   Unzippingig tokenizers/punkt.zip.
+
+query_engine = index.as_query_engine()
+
+response = query_engine.query("could you give the summary of this article in newline seperated bullet points")
+
+display(Markdown(f"<b>{response}</b>"))
